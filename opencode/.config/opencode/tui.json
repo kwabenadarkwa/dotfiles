@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "catppuccin",
+  "keybinds": {
+    "leader": "ctrl+o",
+    "messages_next": "<leader>n",
+    "messages_previous": "<leader>p",
+    "messages_copy": "<leader>y",
+    "messages_undo": "<leader>u",
+    "messages_redo": "<leader>r"
+  }
+}

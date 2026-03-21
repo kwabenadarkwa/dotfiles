@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "mcp": {
+    "mint": {
+      "type": "remote",
+      "url": "https://mintlify.com/docs/mcp",
+      "enabled": true,
+    },
+    "stripe": {
+      "type": "remote",
+      "url": "https://mcp.stripe.com",
+      "headers": {
+        "Authorization": "Redacted",
+      },
+      "enabled": true,
+    },
+    "square": {
+      "type": "remote",
+      "url": "https://mcp.squareup.com/sse",
+      "enabled": true,
+    },
+  },
+}

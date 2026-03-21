@@ -1,0 +1,34 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Theme configuration
+  "theme": "catppuccin",
+  "autoupdate": true,
+  "keybindings": {
+    "leader": "ctrl+o",
+    "messages_next": "<leader>n",
+    "messages_previous": "<leader>p",
+    "messages_copy": "<leader>y",
+    "messages_undo": "<leader>u",
+    "messages_redo": "<leader>r",
+  },
+  "mcp": {
+    "mint": {
+      "type": "remote",
+      "url": "https://mintlify.com/docs/mcp",
+      "enabled": true,
+    },
+    "stripe": {
+      "type": "remote",
+      "url": "https://mcp.stripe.com",
+      "headers": {
+        "Authorization": "Redacted",
+      },
+      "enabled": true,
+    },
+    "square": {
+      "type": "remote",
+      "url": "https://mcp.squareup.com/sse",
+      "enabled": true,
+    },
+  },
+}
