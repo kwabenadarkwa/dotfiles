@@ -65,4 +65,5 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(uv generate-shell-completion zsh)"
+export EDITOR="/opt/homebrew/bin/nvim"
 

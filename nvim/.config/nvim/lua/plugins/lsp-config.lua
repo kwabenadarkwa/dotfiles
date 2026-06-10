@@ -29,27 +29,25 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"clangd",
-					"unocss",
-					"pyright",
-					"gopls",
-					"omnisharp",
-					"astro",
-					-- "eslint-lsp",
-					-- "tailwindcss-language-server",
-					-- "typescript-language-server",
-				},
-				automatic_installation = true,
-			})
-		end,
-	},
-	{ "Hoffs/omnisharp-extended-lsp.nvim" },
-	{
-		"neovim/nvim-lspconfig",
-		config = function()
+				require("mason-lspconfig").setup({
+					ensure_installed = {
+						"lua_ls",
+						"clangd",
+						"unocss",
+						"pyright",
+						"gopls",
+						"astro",
+						-- "eslint-lsp",
+						-- "tailwindcss-language-server",
+						-- "typescript-language-server",
+					},
+					automatic_installation = true,
+				})
+			end,
+		},
+		{
+			"neovim/nvim-lspconfig",
+			config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			-- Using native vim.lsp.config API (Neovim 0.11+)
@@ -122,38 +120,6 @@ return {
 				},
 			}
 
-			vim.lsp.config.omnisharp = {
-				capabilities = capabilities,
-				cmd = {
-					"dotnet",
-					"/Users/kwabenadarkwa/.local/share/nvim/mason/packages/omnisharp/OmniSharp.dll",
-				},
-				handlers = {
-					["textDocument/definition"] = require("omnisharp_extended").definition_handler,
-					["textDocument/typeDefinition"] = require("omnisharp_extended").type_definition_handler,
-					["textDocument/references"] = require("omnisharp_extended").references_handler,
-					["textDocument/implementation"] = require("omnisharp_extended").implementation_handler,
-				},
-				settings = {
-					FormattingOptions = {
-						EnableEditorConfigSupport = true,
-						OrganizeImports = true,
-					},
-					MsBuild = {
-						LoadProjectsOnDemand = true,
-					},
-					RoslynExtensionsOptions = {
-						EnableAnalyzersSupport = true,
-						EnableImportCompletion = true,
-						AnalyzeOpenDocumentsOnly = nil,
-						EnableDecompilationSupport = true,
-					},
-					Sdk = {
-						IncludePrereleases = true,
-					},
-				},
-			}
-
 			vim.lsp.config.astro = {
 				capabilities = capabilities,
 			}
@@ -167,7 +133,6 @@ return {
 			vim.lsp.enable("ts_ls")
 			vim.lsp.enable("pyright")
 			vim.lsp.enable("gopls")
-			vim.lsp.enable("omnisharp")
 			vim.lsp.enable("astro")
 
 			-- Keymaps
@@ -177,7 +142,19 @@ return {
 			vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", {})
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 			vim.keymap.set("i", "<C-s>", vim.lsp.buf.signature_help, {})
-			vim.keymap.set("n", "<leader>rs", "<cmd>LspRestart<CR>", {})
+			vim.keymap.set("n", "<leader>rs", function()
+				local clients = vim.lsp.get_active_clients()
+				if #clients == 0 then
+					vim.notify("No active LSP clients", vim.log.levels.WARN)
+					return
+				end
+				for _, client in ipairs(clients) do
+					vim.lsp.stop_client(client.id, true)
+				end
+				vim.defer_fn(function()
+					vim.cmd("edit")
+				end, 100)
+			end, { desc = "Restart LSP" })
 
 			local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 			for type, icon in pairs(signs) do

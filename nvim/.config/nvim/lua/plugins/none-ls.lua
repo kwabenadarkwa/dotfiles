@@ -9,7 +9,23 @@ return {
 		null_ls.setup({
 			sources = {
 				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.formatting.prettierd,
+				null_ls.builtins.formatting.prettierd.with({
+					filetypes = {
+						"javascript",
+						"javascriptreact",
+						"typescript",
+						"typescriptreact",
+						"css",
+						"scss",
+						"html",
+						"json",
+						"yaml",
+						"markdown",
+						"mdx",
+						"graphql",
+						"astro",
+					},
+				}),
 				-- null_ls.builtins.formatting.prettier.with({
 				--   filetypes = {
 				--     "javascript",
@@ -32,6 +48,10 @@ return {
 				null_ls.builtins.formatting.goimports_reviser,
 				null_ls.builtins.formatting.golines,
 				null_ls.builtins.formatting.csharpier,
+				null_ls.builtins.diagnostics.markdownlint_cli2,
+				null_ls.builtins.diagnostics.hadolint,
+				null_ls.builtins.diagnostics.checkmake,
+				require("none-ls.formatting.taplo"),
 				-- null_ls.builtins.formatting.eslint_d,
 				-- null_ls.builtins.formatting.beautysh,
 				-- --  This is the syntax for adding linters
